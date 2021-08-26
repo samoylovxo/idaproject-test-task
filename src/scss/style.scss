@@ -1,0 +1,267 @@
+@import "helpers";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+input,
+select,
+textarea {
+  @extend %mainShadow;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 15px;
+  border: 0;
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+  background-color: $secondBackgroundColor;
+  padding: 10px 16px;
+  transition: all 0.3s;
+
+  &::placeholder {
+    color: $secondFontsColor;
+  }
+
+  &:hover {
+    @extend %stateShadow;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: $mainFontsColor;
+  background: $mainBackgroundColor;
+}
+
+.wrapper {
+  max-width: 1440px;
+  padding-left: 32px;
+  padding-right: 32px;
+  margin: 0 auto;
+}
+
+.header {
+  padding-top: 32px;
+  padding-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__title {
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 35px;
+    margin: 0;
+  }
+
+  &__select {
+    color: $secondFontsColor;
+    padding: 10px 28px 10px 16px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: url('../images/arrow.svg') no-repeat right 15px top 50%;
+  }
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 16px;
+  align-items: start;
+}
+
+.product-info {
+  background: $secondBackgroundColor;
+  @extend %blocksDefaultStyle;
+  padding: 24px;
+
+  &__content {
+    label {
+      font-size: 10px;
+      line-height: 13px;
+      color: $labelFontsColor;
+    }
+
+    > :nth-child(n + 2):not(button) {
+      margin-top: 33px;
+    }
+  }
+
+  &__description {
+    textarea {
+      min-height: 108px;
+      height: 100%;
+      resize: none;
+    }
+  }
+
+  &__button {
+    margin-top: 24px;
+    overflow: hidden;
+    position: relative;
+    @extend %rippleEff;
+    transition: all 0.3s;
+
+    &:hover {
+      @extend %stateShadow;
+    }
+
+    &:disabled {
+      background-color: #EEEEEE;
+      color: $secondFontsColor;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}
+
+.required-field {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -4px;
+    width: 4px;
+    height: 4px;
+    background: #FF8484;
+    border-radius: 4px;
+  }
+}
+.btn {
+  width: 100%;
+  outline: none;
+  border: 0;
+  padding: 10px;
+  cursor: pointer;
+  background-color: $btnBackgroundColor;
+  color: #fff;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+.cards {
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-gap: 16px;
+    align-items: stretch;
+  }
+
+  &__item-remove {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    border-radius: 10px;
+    @extend %mainShadow;
+    background: $removeIconColor url('../images/remove.svg') no-repeat center;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  &__item {
+    position: relative;
+    background-color: $secondBackgroundColor;
+    @extend %blocksDefaultStyle;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+
+    &:hover .cards__item-remove {
+      opacity: 1;
+    }
+  }
+
+  &__item-image {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+  }
+
+  &__item-content {
+    padding: 16px;
+  }
+
+  &__item-title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  &__item-description {
+    line-height: 20px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+
+  &__item-price {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .main {
+    grid-template-columns: 1fr 2.5fr;
+  }
+
+  .cards {
+    &__row {
+      grid-template-columns: repeat(2, minmax(200px, 1fr));
+    }
+  }
+}
+@media (max-width: 992px) {
+  .main {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+@media (max-width: 768px) {
+  .main {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cards {
+    &__row {
+      grid-template-columns: repeat(1, minmax(200px, 1fr));
+    }
+  }
+}
+@media (max-width: 576px) {
+  .main {
+    display: block;
+  }
+
+  .header {
+    &__title {
+      font-size: 22px;
+    }
+  }
+}
+@media (max-width: 376px) {
+  .wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
